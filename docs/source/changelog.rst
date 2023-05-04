@@ -24,4 +24,10 @@ Changelog
 * :bug:`-` Simplified ACLs (refactoring)
 
 * :release:`0.4.0 <2015-08-19>`
-* :support:`-` Added support for JSON sch
+* :support:`-` Added support for JSON schema draft 04
+* :support:`-` RAML is now parsed using ramlfications instead of pyraml-parser
+* :feature:`-` Boolean values in RAML don't have to be strings anymore (previous limitation of pyraml-parser)
+* :feature:`-` Renamed setting 'ramses.auth' to 'auth'
+* :feature:`-` Renamed setting 'debug' to 'enable_get_tunneling'
+* :feature:`-` Field name and request object are now passed to field processors under 'field' and 'request' kwargs respectively
+* :feature:`-` Added support for relationship processors and backref relationship processors ('backref_after_validation'/'back
