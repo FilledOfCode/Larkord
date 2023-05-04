@@ -14,4 +14,14 @@ Changelog
 * :release:`0.5.0 <2015-10-07>`
 * :bug:`- major` Fixed a bug using 'required' '_db_settings' property on 'relationship' field
 * :support:`-` Added support for `'nefertari-guards' <https://nefertari-guards.readthedocs.org/>`_
-* :support:`-` Added support for N
+* :support:`-` Added support for Nefertari '_hidden_fields'
+* :support:`-` Added support for Nefertari event handlers
+* :support:`-` Simplified field processors, '_before_processors' is now called '_processors', removed '_after_processors'
+* :support:`-` ACL permission names in RAML now match real permission names instead of http methods
+* :support:`-` Added support for the property '_nesting_depth' in schemas
+
+* :release:`0.4.1 <2015-09-02>`
+* :bug:`-` Simplified ACLs (refactoring)
+
+* :release:`0.4.0 <2015-08-19>`
+* :support:`-` Added support for JSON sch
