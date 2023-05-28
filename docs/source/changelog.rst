@@ -49,4 +49,18 @@ Changelog
 * :bug:`-` Forward compatibility with nefertari releases
 
 * :release:`0.2.2 <2015-06-03>`
-* :bug:`-` Fixed password minimum length support by adding before and
+* :bug:`-` Fixed password minimum length support by adding before and after validation processors
+* :bug:`-` Fixed race condition in Elasticsearch indexing
+
+* :release:`0.2.1 <2015-05-27>`
+* :bug:`-` Fixed limiting fields to be searched
+* :bug:`-` Fixed login issue
+* :bug:`-` Fixed custom processors
+
+* :release:`0.2.0 <2015-05-18>`
+* :feature:`-` Added support for securitySchemes, authentication (Pyramid 'auth ticket') and ACLs
+* :support:`-` Added several display options to schemas
+* :support:`-` Added unit tests
+* :support:`-` Improved docs
+* :feature:`-` Add support for processors in schema definition
+* :featu
