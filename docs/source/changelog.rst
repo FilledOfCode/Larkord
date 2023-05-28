@@ -36,4 +36,17 @@ Changelog
 * :feature:`-` Prefixed all Ramses schema properties by an underscore: '_auth_fields', '_public_fields', '_nested_relationships', '_auth_model', '_db_settings'
 * :feature:`-` Error response bodies are now returned as JSON
 * :bug:`- major` Fixed processors not applied on fields of type 'list' and type 'dict'
-* :bug:`- ma
+* :bug:`- major` Fixed a limitation preventing collection names to use nouns that do not have plural forms
+
+* :release:`0.3.1 <2015-07-07>`
+* :support:`- backported` Added support for callables in 'default' field argument
+* :support:`- backported` Added support for 'onupdate' field argument
+
+* :release:`0.3.0 <2015-06-14>`
+* :support:`-` Added python3 support
+
+* :release:`0.2.3 <2015-06-05>`
+* :bug:`-` Forward compatibility with nefertari releases
+
+* :release:`0.2.2 <2015-06-03>`
+* :bug:`-` Fixed password minimum length support by adding before and
