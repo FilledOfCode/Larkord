@@ -84,4 +84,25 @@ You can alternatively elect a field to be the primary key of your model by setti
         }
     }
 
-Constr
+Constraints
+-----------
+
+You can set a minimum and/or maximum length of your field by setting the ``min_length`` / ``max_length`` properties under ``_db_settings``. You can also add a unique constraint on a field by setting the ``unique`` property.
+
+.. code-block:: json
+
+    "field": {
+        (...)
+        "_db_settings": {
+            (...)
+            "unique": true,
+            "min_length": 5,
+            "max_length": 50
+        }
+    }
+
+
+Default Value
+-------------
+
+You can set a default value for you field by setting the ``default`` pro
