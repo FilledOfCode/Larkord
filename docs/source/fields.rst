@@ -105,4 +105,32 @@ You can set a minimum and/or maximum length of your field by setting the ``min_l
 Default Value
 -------------
 
-You can set a default value for you field by setting the ``default`` pro
+You can set a default value for you field by setting the ``default`` property under ``_db_settings``.
+
+.. code-block:: json
+
+    "field": {
+        (...)
+        "_db_settings": {
+            (...)
+            "default": "default value"
+        }
+    },
+
+The ``default`` value can also be set to a Python callable, e.g.
+
+.. code-block:: json
+
+    "datetime_field": {
+        (...)
+        "_db_settings": {
+            (...)
+            "default": "{{datetime.datetime.utcnow}}"
+        }
+    },
+
+
+Update Default Value
+--------------------
+
+You can set an update default value 
