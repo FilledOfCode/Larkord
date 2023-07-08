@@ -133,4 +133,27 @@ The ``default`` value can also be set to a Python callable, e.g.
 Update Default Value
 --------------------
 
-You can set an update default value 
+You can set an update default value for your field by setting the ``onupdate`` property under ``_db_settings``. This is particularly useful to update 'datetime' fields on every updates, e.g.
+
+.. code-block:: json
+
+    "datetime_field": {
+        (...)
+        "_db_settings": {
+            (...)
+            "onupdate": "{{datetime.datetime.utcnow}}"
+        }
+    },
+
+
+List Fields
+-----------
+
+You can list the accepted values of any ``list`` or ``choice`` fields by setting the ``choices`` property under ``_db_settings``.
+
+.. code-block:: json
+
+    "field": {
+        (...)
+        "_db_settings": {
+    
