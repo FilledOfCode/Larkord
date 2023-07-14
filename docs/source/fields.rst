@@ -156,4 +156,25 @@ You can list the accepted values of any ``list`` or ``choice`` fields by setting
     "field": {
         (...)
         "_db_settings": {
-    
+            "type": "choice",
+            "choices": ["choice1", "choice2", "choice3"],
+            "default": "choice1"
+        }
+    }
+
+You can also provide the list/choice items' ``item_type``.
+
+.. code-block:: json
+
+    "field": {
+        (...)
+        "_db_settings": {
+            "type": "list",
+            "item_type": "string"
+        }
+    }
+
+Other ``_db_settings``
+----------------------
+
+Note that you can pass any engine-specific arguments to your fields by defining such arguments in ``_db_settings``.
