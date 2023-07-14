@@ -19,4 +19,18 @@ Requirements
 ------------
 
 * Python 2.7, 3.3 or 3.4
-* Elasticsearch (data is automatically indexed for near rea
+* Elasticsearch (data is automatically indexed for near real-time search)
+* Postgres or Mongodb or Your Data Store™
+
+
+Examples
+--------
+
+- For a more complete example of a Pyramid project using Ramses, you can take a look at the `Example Project <https://github.com/ramses-tech/ramses-example>`_.
+- RAML can be used to generate an end-to-end application, check out `this example <https://github.com/jstoiko/raml-javascript-client>`_ using Ramses on the backend and RAML-javascript-client + BackboneJS on the front-end.
+
+
+Tutorials
+---------
+
+- `Create a REST API in Minutes With Pyramid and Ramses <htt
