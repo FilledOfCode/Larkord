@@ -33,4 +33,5 @@ Examples
 Tutorials
 ---------
 
-- `Create a REST API in Minutes With Pyramid and Ramses <htt
+- `Create a REST API in Minutes With Pyramid and Ramses <https://realpython.com/blog/python/create-a-rest-api-in-minutes-with-pyramid-and-ramses/>`_
+- `Make an Elasticsearch-powered REST API for any data with Ramses <https://www.elastic.co/blog/make-an-elasticsearch-powered-rest-api-for-any-data-with-ramses>`_
