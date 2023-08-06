@@ -28,4 +28,23 @@ OneToMany by default.
 
 Example of using ``relationship`` field (defined on ``User`` model in our example):
 
-.. code-block:: j
+.. code-block:: json
+
+    "stories": {
+        "_db_settings": {
+            "type": "relationship",
+            "document": "Story",
+            "backref_name": "owner"
+        }
+    }
+
+**Required params:**
+
+*type*
+    String. Just ``relationship``.
+
+*document*
+    String. Exact name of model class to which relationship is set up. To find out the name of model use singularized uppercased version of route name. E.g. if we want to set up relationship to objects of ``/stories`` then the ``document`` arg will be ``Story``.
+
+*backref_name*
+    String. Name of *back reference* field. This field w
