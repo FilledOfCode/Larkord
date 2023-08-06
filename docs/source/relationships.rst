@@ -47,4 +47,12 @@ Example of using ``relationship`` field (defined on ``User`` model in our exampl
     String. Exact name of model class to which relationship is set up. To find out the name of model use singularized uppercased version of route name. E.g. if we want to set up relationship to objects of ``/stories`` then the ``document`` arg will be ``Story``.
 
 *backref_name*
-    String. Name of *back reference* field. This field w
+    String. Name of *back reference* field. This field will be auto-generated on model we set up relationship to and will hold the instance of model we are defining. In our example, field ``Story.owner`` will be generated and it will hold instance of ``User`` model to which story instance belongs. **Use this field to change relationships between objects.**
+
+
+Field "type": "foreign_key"
+---------------------------
+
+This represents a Foreign Key constraint in SQL and is only required
+when using ``nefertari_sqla`` engine. It is used in conjunction with
+the relationship field, bu
