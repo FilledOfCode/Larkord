@@ -55,4 +55,16 @@ Field "type": "foreign_key"
 
 This represents a Foreign Key constraint in SQL and is only required
 when using ``nefertari_sqla`` engine. It is used in conjunction with
-the relationship field, bu
+the relationship field, but is used on the model that ``relationship``
+refers to. For example, if the ``User`` model contained the
+``relationship`` field, than the ``Story`` model would need a
+``foreign_key`` field.
+
+**Notes:**
+
+    * This field is not required and is ignored when using nefertari_mongodb engine.
+    * Name of the ``foreign_key`` field does not depend on relationship params in any way.
+    * This field **MUST NOT** be used to change relationships. This field only exists because it is required by SQLAlchemy.
+
+
+Example of using ``fo
