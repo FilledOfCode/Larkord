@@ -67,4 +67,23 @@ refers to. For example, if the ``User`` model contained the
     * This field **MUST NOT** be used to change relationships. This field only exists because it is required by SQLAlchemy.
 
 
-Example of using ``fo
+Example of using ``foreign_key`` field (defined on ``Story`` model in our example):
+
+.. code-block:: json
+
+    "owner_id": {
+        "_db_settings": {
+            "type": "foreign_key",
+            "ref_document": "User",
+            "ref_column": "user.username",
+            "ref_column_type": "string"
+        }
+    }
+
+**Required params:**
+
+*type*
+    String. Just ``foreign_key``.
+
+*ref_document*
+    String. Exact name of model class to which foreign key is set up. To find out the name of model use singularized uppercased version of route name. E.g. if we want to set
