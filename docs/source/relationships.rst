@@ -86,4 +86,12 @@ Example of using ``foreign_key`` field (defined on ``Story`` model in our exampl
     String. Just ``foreign_key``.
 
 *ref_document*
-    String. Exact name of model class to which foreign key is set up. To find out the name of model use singularized uppercased version of route name. E.g. if we want to set
+    String. Exact name of model class to which foreign key is set up. To find out the name of model use singularized uppercased version of route name. E.g. if we want to set up foreign key to objects of ``/user`` then the ``ref_document`` arg will be ``User``.
+
+*ref_column*
+    String. Dotted name/path to ``ref_document`` model's primary key
+    column. ``ref_column`` is the lowercased name of model we refer to in
+    ``ref_document`` joined by a dot with the exact name of its primary key column. In our example this is ``"user.username"``.
+
+**ref_column_type**
+    String. Ramses field type of ``ref_document`` model's primary key column specified in ``ref_column`` parameter. In our example this is ``"string"`` because
