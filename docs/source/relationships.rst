@@ -94,4 +94,16 @@ Example of using ``foreign_key`` field (defined on ``Story`` model in our exampl
     ``ref_document`` joined by a dot with the exact name of its primary key column. In our example this is ``"user.username"``.
 
 **ref_column_type**
-    String. Ramses field type of ``ref_document`` model's primary key column specified in ``ref_column`` parameter. In our example this is ``"string"`` because
+    String. Ramses field type of ``ref_document`` model's primary key column specified in ``ref_column`` parameter. In our example this is ``"string"`` because ``User.username`` is ``"type": "string"``.
+
+
+One to One relationship
+-----------------------
+
+To create OneToOne relationships, specify ``"uselist": false`` in ``_db_settings`` of ``relationship`` field. When setting up One-to-One relationship, it doesn't matter which side defines the ``relationship`` field.
+
+E.g. if we had ``Profile`` model and we wanted to set up One-to-One relationship between ``Profile`` and ``User``, we would have to define a regular ``foreign_key`` field on ``Profile``:
+
+.. code-block:: json
+
+    "user_id":
