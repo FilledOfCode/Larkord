@@ -106,4 +106,27 @@ E.g. if we had ``Profile`` model and we wanted to set up One-to-One relationship
 
 .. code-block:: json
 
-    "user_id":
+    "user_id": {
+        "_db_settings": {
+            "type": "foreign_key",
+            "ref_document": "User",
+            "ref_column": "user.username",
+            "ref_column_type": "string"
+        }
+    }
+
+and ``relationship`` field with ``"uselist": false`` on ``User``:
+
+.. code-block:: json
+
+    "profile": {
+        "_db_settings": {
+            "type": "relationship",
+            "document": "Profile",
+            "backref_name": "user",
+            "uselist": false
+        }
+    }
+
+
+This relationship could
