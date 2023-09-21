@@ -158,4 +158,27 @@ E.g. if we were to add new relationship field ``User.assigned_stories``, relatio
     "assigned_stories": {
         "_db_settings": {
             "type": "relationship",
-            "docu
+            "document": "Story",
+            "backref_name": "assignee",
+            "foreign_keys": "Story.assignee_id"
+        }
+    }
+
+And fields on ``Story`` like so:
+
+.. code-block:: json
+
+    "owner_id": {
+        "_db_settings": {
+            "type": "foreign_key",
+            "ref_document": "User",
+            "ref_column": "user.username",
+            "ref_column_type": "string"
+        }
+    },
+    "assignee_id": {
+        "_db_settings": {
+            "type": "foreign_key",
+            "ref_document": "User",
+            "ref_column": "user.username",
+ 
