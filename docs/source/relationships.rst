@@ -181,4 +181,33 @@ And fields on ``Story`` like so:
             "type": "foreign_key",
             "ref_document": "User",
             "ref_column": "user.username",
- 
+            "ref_column_type": "string"
+        }
+    }
+
+
+Complete example
+----------------
+
+**example.raml**
+
+.. code-block:: yaml
+
+    #%RAML 0.8
+    ---
+    title: Example REST API
+    documentation:
+        - title: Home
+          content: |
+            Welcome to the example API.
+    baseUri: http://{host}:{port}/{version}
+    version: v1
+
+    /stories:
+        displayName: All stories
+        get:
+            description: Get all stories
+        post:
+            description: Create a new story
+            body:
+                application/j
