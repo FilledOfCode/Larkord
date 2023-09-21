@@ -140,4 +140,22 @@ Multiple relationships
 If we were to define multiple relationships from model A to model B,
 each relationship must have a corresponding ``foreign_key``
 defined. Also you must use a ``foreign_keys`` parameter on each
-``
+``relationship`` field to specify which ``foreign_key`` each
+``relationship`` uses.
+
+E.g. if we were to add new relationship field ``User.assigned_stories``, relationship fields on ``User`` would have to be defined like this:
+
+.. code-block:: json
+
+    "stories": {
+        "_db_settings": {
+            "type": "relationship",
+            "document": "Story",
+            "backref_name": "owner",
+            "foreign_keys": "Story.owner_id"
+        }
+    },
+    "assigned_stories": {
+        "_db_settings": {
+            "type": "relationship",
+            "docu
