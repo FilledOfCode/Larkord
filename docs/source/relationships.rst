@@ -129,4 +129,15 @@ and ``relationship`` field with ``"uselist": false`` on ``User``:
     }
 
 
-This relationship could
+This relationship could also be defined the other way but with the same result: ``foreign_key`` field on ``User`` and ``relationship`` field on ``Profile`` pointing to ``User``.
+
+
+Multiple relationships
+----------------------
+
+**Note: This part is only valid(required) for nefertari_sqla engine, as nefertari_mongodb engine does not use foreign_key fields.**
+
+If we were to define multiple relationships from model A to model B,
+each relationship must have a corresponding ``foreign_key``
+defined. Also you must use a ``foreign_keys`` parameter on each
+``
