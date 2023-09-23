@@ -276,4 +276,11 @@ Complete example
             },
             "owner_id": {
                 "_db_settings": {
-                   
+                    "type": "foreign_key",
+                    "ref_document": "User",
+                    "ref_column": "user.username",
+                    "ref_column_type": "string"
+                }
+            }
+        }
+    }
