@@ -210,4 +210,23 @@ Complete example
         post:
             description: Create a new story
             body:
-                application/j
+                application/json:
+                    schema: !include story.json
+        /{id}:
+            displayName: One story
+            get:
+                description: Get a particular story
+
+    /users:
+        displayName: All users
+        get:
+            description: Get all users
+        post:
+            description: Create a new user
+            body:
+                application/json:
+                    schema: !include user.json
+        /{username}:
+            displayName: One user
+            get:
+                description: Get a particular user
