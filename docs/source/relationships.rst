@@ -251,4 +251,29 @@ Complete example
             "stories": {
                 "_db_settings": {
                     "type": "relationship",
-                    "document": 
+                    "document": "Story",
+                    "backref_name": "owner"
+                }
+            }
+        }
+    }
+
+
+**story.json**
+
+.. code-block:: json
+
+    {
+        "type": "object",
+        "title": "Story schema",
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "properties": {
+            "id": {
+                "_db_settings": {
+                    "type": "id_field",
+                    "primary_key": true
+                }
+            },
+            "owner_id": {
+                "_db_settings": {
+                   
