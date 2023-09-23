@@ -230,3 +230,25 @@ Complete example
             displayName: One user
             get:
                 description: Get a particular user
+
+
+**user.json**
+
+.. code-block:: json
+
+    {
+        "type": "object",
+        "title": "User schema",
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "required": ["username"],
+        "properties": {
+            "username": {
+                "_db_settings": {
+                    "type": "string",
+                    "primary_key": true
+                }
+            },
+            "stories": {
+                "_db_settings": {
+                    "type": "relationship",
+                    "document": 
