@@ -6,4 +6,20 @@ from pyramid.scaffolds import PyramidTemplate
 
 
 class RamsesStarterTemplate(PyramidTemplate):
-    _template_dir = 'ramses_starter
+    _template_dir = 'ramses_starter'
+    summary = 'Ramses starter'
+
+    def pre(self, command, output_dir, vars):
+        dbengine_choices = {'1': 'sqla', '2': 'mongodb'}
+        vars['engine'] = dbengine_choices[moves.input("""
+        Which database backend would you like to use:
+
+        (1) for SQLAlchemy/PostgreSQL, or
+        (2) for MongoEngine/MongoDB?
+
+        [default is '1']: """) or '1']
+
+        if vars['package'] == 'site':
+            raise ValueError("""
+                "Site" is a reserved keyword in Python.
+                 Please use a different project name.
