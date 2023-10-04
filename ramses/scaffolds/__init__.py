@@ -22,4 +22,12 @@ class RamsesStarterTemplate(PyramidTemplate):
         if vars['package'] == 'site':
             raise ValueError("""
                 "Site" is a reserved keyword in Python.
-                 Please use a different project name.
+                 Please use a different project name. """)
+
+    def post(self, command, output_dir, vars):
+        os.chdir(str(output_dir))
+        subprocess.call('pip install -r requirements.txt', shell=True)
+        subprocess.call('pip install nefertari-{}'.format(vars['engine']),
+                        shell=True)
+        msg = """Goodbye boilerplate! Welcome to Ramses."""
+        self.out(msg)
