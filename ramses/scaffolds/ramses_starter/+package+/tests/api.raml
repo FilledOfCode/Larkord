@@ -23,4 +23,24 @@ protocols: [HTTP]
             200:
                 description: Returns a list of items
     post:
-        description: 
+        description: Create a new item
+        body:
+            application/json:
+                schema: !include items.json
+                example: |
+                    {
+                        "id": "507f191e810c19729de860ea",
+                        "name": "Banana",
+                        "description": "Tasty"
+                    }
+        responses:
+            201:
+                description: Created item
+                body:
+                    application/json:
+                        schema: !include items.json
+
+    /{id}:
+        uriParameters:
+            id:
+                
