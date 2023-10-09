@@ -60,4 +60,17 @@ protocols: [HTTP]
                         application/json:
                             schema: !include items.json
         delete:
-            description: D
+            description: Delete a particular item
+            responses:
+                200:
+                    description: Deleted item
+        patch:
+            description: Update a particular item
+            body:
+                application/json:
+                    example: { "name": "Tree" }
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: !include items.json
