@@ -1,1 +1,26 @@
-#%R
+#%RAML 0.8
+---
+title: Items API
+documentation:
+    - title: Items REST API
+      content: |
+        Welcome to the Items API.
+baseUri: http://{host}:{port}/{version}
+version: api
+mediaType: application/json
+protocols: [HTTP]
+
+/items:
+    displayName: Collection of items
+    head:
+        description: Head request
+        responses:
+            200:
+                description: Return headers
+    get:
+        description: Get all item
+        responses:
+            200:
+                description: Returns a list of items
+    post:
+        description: 
