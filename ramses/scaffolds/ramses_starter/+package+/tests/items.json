@@ -21,4 +21,9 @@
         },
         "description": {
             "type": ["string", "null"],
-         
+            "_db_settings": {
+                "type": "text"
+            }
+        }
+    }
+}
