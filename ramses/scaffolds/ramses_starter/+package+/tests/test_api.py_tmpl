@@ -28,4 +28,6 @@ def setup(req, examples):
             Item(**example).save()
 
 
-# ra entry point: ins
+# ra entry point: instantiate the API test suite
+api = ra.api(ramlfile, testapp)
+api.autotest()
