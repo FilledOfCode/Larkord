@@ -1,0 +1,13 @@
+[app:{{package}}]
+use = egg:{{package}}
+
+# Ramses
+ramses.raml_schema = api.raml
+database_acls = false
+
+# Nefertari
+nefertari.engine = nefertari_{{engine}}
+enable_get_tunneling = true
+
+# SQLA
+s
