@@ -32,4 +32,41 @@ base_url = http://%(host)s:6543
 
 # CORS
 cors.enable = false
-cors.allow_origins
+cors.allow_origins = %(base_url)s
+cors.allow_credentials = true
+
+[composite:main]
+use = egg:Paste#urlmap
+/api/ = {{package}}
+
+[server:main]
+use = egg:waitress#main
+host = 0.0.0.0
+port = 6543
+threads = 3
+
+[loggers]
+keys = root, {{package}}, nefertari, ramses
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console
+
+[logger_{{package}}]
+level = INFO
+handlers =
+qualname = {{package}}
+
+[logger_nefertari]
+level = INFO
+handlers =
+qualname = nefertari
+
+[logger_ramses]
+level = INFO
