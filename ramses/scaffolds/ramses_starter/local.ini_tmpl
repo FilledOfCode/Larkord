@@ -10,4 +10,26 @@ nefertari.engine = nefertari_{{engine}}
 enable_get_tunneling = true
 
 # SQLA
-s
+sqlalchemy.url = postgresql://localhost:5432/{{package}}
+
+# MongoDB settings
+mongodb.host = localhost
+mongodb.port = 27017
+mongodb.db = {{package}}
+
+# Elasticsearch
+elasticsearch.hosts = localhost:9200
+elasticsearch.sniff = false
+elasticsearch.index_name = {{package}}
+elasticsearch.index.disable = false
+elasticsearch.enable_refresh_query = false
+elasticsearch.enable_aggregations = false
+elasticsearch.enable_polymorphic_query = false
+
+# {{package}}
+host = localhost
+base_url = http://%(host)s:6543
+
+# CORS
+cors.enable = false
+cors.allow_origins
