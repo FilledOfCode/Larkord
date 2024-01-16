@@ -51,4 +51,7 @@ def guards_engine_mock(request):
 
 
 def config_mock():
-    from mock i
+    from mock import Mock
+    config = Mock()
+    config.registry.database_acls = False
+    return config
