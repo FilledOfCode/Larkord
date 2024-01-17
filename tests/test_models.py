@@ -56,4 +56,18 @@ class TestHelperFunctions(object):
         from ramses import models
         config = Mock()
         matching_res = Mock(method='post', path='/stories')
-        resource = Mock(root=Mo
+        resource = Mock(root=Mock(resources=[
+            matching_res,
+            Mock(method='options', path='/stories'),
+            Mock(method='post', path='/items'),
+        ]))
+        mock_get.return_value = None
+        config = config_mock()
+        models.prepare_relationship(config, 'Story', resource)
+        mock_set.assert_called_once_with(config, matching_res, 'Story')
+
+    @patch('ramses.models.resource_schema')
+    @patch('ramses.models.get_existing_model')
+    def test_setup_data_model_existing_model(self, mock_get, mock_schema):
+        from ramses import models
+        con
