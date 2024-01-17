@@ -29,4 +29,17 @@ class TestHelperFunctions(object):
         from ramses import models
         config = Mock()
         models.prepare_relationship(
-  
+            config, 'Story', 'raml_resource')
+        mock_get.assert_called_once_with('Story')
+        assert not mock_set.called
+
+    @patch('ramses.models.get_existing_model')
+    def test_prepare_relationship_resource_not_found(self, mock_get):
+        from ramses import models
+        config = Mock()
+        resource = Mock(root=Mock(resources=[
+            Mock(method='get', path='/stories'),
+            Mock(method='options', path='/stories'),
+            Mock(method='post', path='/items'),
+        ]))
+        mock_get.return_value = None
