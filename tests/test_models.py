@@ -43,3 +43,17 @@ class TestHelperFunctions(object):
             Mock(method='post', path='/items'),
         ]))
         mock_get.return_value = None
+        with pytest.raises(ValueError) as ex:
+            models.prepare_relationship(config, 'Story', resource)
+        expected = ('Model `Story` used in relationship '
+                    'is not defined')
+        assert str(ex.value) == expected
+
+    @patch('ramses.models.setup_data_model')
+    @patch('ramses.models.get_existing_model')
+    def test_prepare_relationship_resource_found(
+            self, mock_get, mock_set):
+        from ramses import models
+        config = Mock()
+        matching_res = Mock(method='post', path='/stories')
+        resource = Mock(root=Mo
