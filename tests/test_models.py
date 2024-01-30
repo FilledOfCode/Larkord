@@ -97,4 +97,16 @@ class TestHelperFunctions(object):
         config = Mock()
         mock_get.return_value = None
         mock_schema.return_value = None
-        with pytest.raises(E
+        with pytest.raises(Exception) as ex:
+            models.setup_data_model(config, 'foo', 'Bar')
+        assert str(ex.value) == 'Missing schema for model `Bar`'
+        mock_get.assert_called_once_with('Bar')
+        mock_schema.assert_called_once_with('foo')
+
+    @patch('ramses.models.resource_schema')
+    @patch('ramses.models.generate_model_cls')
+    @patch('ramses.models.get_existing_model')
+    def test_setup_data_model_success(self, mock_get, mock_gen, mock_schema):
+        from ramses import models
+        mock_get.return_value = None
+        mock_schema.ret
