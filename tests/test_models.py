@@ -136,4 +136,19 @@ class TestHelperFunctions(object):
     @patch('ramses.models.setup_data_model')
     def test_handle_model_generation(self, mock_set):
         from ramses import models
-        c
+        config = Mock()
+        mock_set.return_value = ('Foo1', True)
+        config = config_mock()
+        raml_resource = Mock(path='/stories')
+        model, auth_model = models.handle_model_generation(
+            config, raml_resource)
+        mock_set.assert_called_once_with(config, raml_resource, 'Story')
+        assert model == 'Foo1'
+        assert auth_model
+
+
+@patch('ramses.models.setup_fields_processors')
+@patch('ramses.models.setup_model_event_subscribers')
+@patch('ramses.models.registry')
+@pytest.mark.usefixtures('engine_mock')
+class T
