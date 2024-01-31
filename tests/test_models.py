@@ -151,4 +151,19 @@ class TestHelperFunctions(object):
 @patch('ramses.models.setup_model_event_subscribers')
 @patch('ramses.models.registry')
 @pytest.mark.usefixtures('engine_mock')
-class T
+class TestGenerateModelCls(object):
+
+    def _test_schema(self):
+        return {
+            'properties': {},
+            '_auth_model': False,
+            '_public_fields': ['public_field1'],
+            '_auth_fields': ['auth_field1'],
+            '_hidden_fields': ['hidden_field1'],
+            '_nested_relationships': ['nested_field1'],
+            '_nesting_depth': 3
+        }
+
+    @patch('ramses.models.resolve_to_callable')
+    def test_simple_case(
+            self, mock_res, mock_reg, mock_subscribers, mock_proc):
