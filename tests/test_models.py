@@ -123,4 +123,17 @@ class TestHelperFunctions(object):
 
     @patch('ramses.models.setup_data_model')
     def test_handle_model_generation_value_err(self, mock_set):
-        from ramses import model
+        from ramses import models
+        config = Mock()
+        mock_set.side_effect = ValueError('strange error')
+        config = config_mock()
+        with pytest.raises(ValueError) as ex:
+            raml_resource = Mock(path='/stories')
+            models.handle_model_generation(config, raml_resource)
+        assert str(ex.value) == 'Story: strange error'
+        mock_set.assert_called_once_with(config, raml_resource, 'Story')
+
+    @patch('ramses.models.setup_data_model')
+    def test_handle_model_generation(self, mock_set):
+        from ramses import models
+        c
