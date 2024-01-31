@@ -109,4 +109,18 @@ class TestHelperFunctions(object):
     def test_setup_data_model_success(self, mock_get, mock_gen, mock_schema):
         from ramses import models
         mock_get.return_value = None
-        mock_schema.ret
+        mock_schema.return_value = {'field1': 'val1'}
+        config = config_mock()
+        model = models.setup_data_model(config, 'foo', 'Bar')
+        mock_get.assert_called_once_with('Bar')
+        mock_schema.assert_called_once_with('foo')
+        mock_gen.assert_called_once_with(
+            config,
+            schema={'field1': 'val1'},
+            model_name='Bar',
+            raml_resource='foo')
+        assert model == mock_gen()
+
+    @patch('ramses.models.setup_data_model')
+    def test_handle_model_generation_value_err(self, mock_set):
+        from ramses import model
