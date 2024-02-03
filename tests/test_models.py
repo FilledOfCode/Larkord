@@ -193,4 +193,16 @@ class TestGenerateModelCls(object):
         assert model_cls._hidden_fields == ['hidden_field1']
         assert model_cls._nested_relationships == ['nested_field1']
         assert model_cls.foo == 'bar'
-        assert iss
+        assert issubclass(model_cls, models.engine.ESBaseDocument)
+        assert not issubclass(model_cls, AuthModelMethodsMixin)
+        models.engine.FloatField.assert_called_once_with(
+            default=0, required=True)
+        mock_reg.mget.assert_called_once_with('Story')
+        mock_subscribers.assert_called_once_with(
+            config, model_cls, schema)
+        mock_proc.assert_called_once_with(
+            config, model_cls, schema)
+
+    @patch('ramses.models.resolve_to_callable')
+    def test_callable_default(
+       
