@@ -181,4 +181,16 @@ class TestGenerateModelCls(object):
         }
         mock_reg.mget.return_value = {'foo': 'bar'}
         model_cls, auth_model = models.generate_model_cls(
-            conf
+            config, schema=schema, model_name='Story',
+            raml_resource=None)
+        assert not auth_model
+        assert model_cls.__name__ == 'Story'
+        assert hasattr(model_cls, 'progress')
+        assert model_cls.__tablename__ == 'story'
+        assert model_cls._public_fields == ['public_field1']
+        assert model_cls._nesting_depth == 3
+        assert model_cls._auth_fields == ['auth_field1']
+        assert model_cls._hidden_fields == ['hidden_field1']
+        assert model_cls._nested_relationships == ['nested_field1']
+        assert model_cls.foo == 'bar'
+        assert iss
