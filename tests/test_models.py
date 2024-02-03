@@ -167,3 +167,18 @@ class TestGenerateModelCls(object):
     @patch('ramses.models.resolve_to_callable')
     def test_simple_case(
             self, mock_res, mock_reg, mock_subscribers, mock_proc):
+        from nefertari.authentication.models import AuthModelMethodsMixin
+        from ramses import models
+        config = config_mock()
+        models.engine.FloatField.reset_mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {
+            "_db_settings": {
+                "type": "float",
+                "required": True,
+                "default": 0,
+            }
+        }
+        mock_reg.mget.return_value = {'foo': 'bar'}
+        model_cls, auth_model = models.generate_model_cls(
+            conf
