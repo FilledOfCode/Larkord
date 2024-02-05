@@ -205,4 +205,17 @@ class TestGenerateModelCls(object):
 
     @patch('ramses.models.resolve_to_callable')
     def test_callable_default(
-       
+            self, mock_res, mock_reg, mock_subscribers, mock_proc):
+        from ramses import models
+        config = config_mock()
+        models.engine.FloatField.reset_mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {
+            "_db_settings": {
+                "type": "float",
+                "default": "{{foobar}}",
+            }
+        }
+        mock_res.return_value = 1
+        model_cls, auth_model = models.generate_model_cls(
+            config, schema=schema, model_name='Story',
