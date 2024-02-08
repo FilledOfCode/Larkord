@@ -219,3 +219,16 @@ class TestGenerateModelCls(object):
         mock_res.return_value = 1
         model_cls, auth_model = models.generate_model_cls(
             config, schema=schema, model_name='Story',
+            raml_resource=None)
+        models.engine.FloatField.assert_called_with(
+            default=1, required=False)
+        mock_res.assert_called_once_with('{{foobar}}')
+
+    def test_auth_model(self, mock_reg, mock_subscribers, mock_proc):
+        from nefertari.authentication.models import AuthModelMethodsMixin
+        from ramses import models
+        config = config_mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {'_db_settings': {}}
+        schema['_auth_model'] = True
+        mock_re
