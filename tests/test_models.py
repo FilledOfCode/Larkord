@@ -231,4 +231,18 @@ class TestGenerateModelCls(object):
         schema = self._test_schema()
         schema['properties']['progress'] = {'_db_settings': {}}
         schema['_auth_model'] = True
-        mock_re
+        mock_reg.mget.return_value = {'foo': 'bar'}
+
+        model_cls, auth_model = models.generate_model_cls(
+            config, schema=schema, model_name='Story',
+            raml_resource=None)
+        assert auth_model
+        assert issubclass(model_cls, AuthModelMethodsMixin)
+
+    def test_database_acls_option(
+            self, mock_reg, mock_subscribers, mock_proc,
+            guards_engine_mock):
+        from ramses import models
+        schema = self._test_schema()
+        schema['properties']['progress'] = {'_db_settings': {}}
+        schema['_auth_model'] = T
