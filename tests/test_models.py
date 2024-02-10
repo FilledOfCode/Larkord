@@ -259,4 +259,16 @@ class TestGenerateModelCls(object):
         model_cls, auth_model = models.generate_model_cls(
             config, schema=schema, model_name='Story2',
             raml_resource=None)
-        assert
+        assert issubclass(model_cls, guards_engine_mock.DocumentACLMixin)
+
+    def test_db_based_model(self, mock_reg, mock_subscribers, mock_proc):
+        from nefertari.authentication.models import AuthModelMethodsMixin
+        from ramses import models
+        config = config_mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {'_db_settings': {}}
+        mock_reg.mget.return_value = {'foo': 'bar'}
+
+        model_cls, auth_model = models.generate_model_cls(
+            config, schema=schema, model_name='Story',
+            raml_resource=No
