@@ -271,4 +271,16 @@ class TestGenerateModelCls(object):
 
         model_cls, auth_model = models.generate_model_cls(
             config, schema=schema, model_name='Story',
-            raml_resource=No
+            raml_resource=None, es_based=False)
+        assert issubclass(model_cls, models.engine.BaseDocument)
+        assert not issubclass(model_cls, models.engine.ESBaseDocument)
+        assert not issubclass(model_cls, AuthModelMethodsMixin)
+
+    def test_no_db_settings(self, mock_reg, mock_subscribers, mock_proc):
+        from ramses import models
+        config = config_mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {'type': 'pickle'}
+        mock_reg.mget.return_value = {'foo': 'bar'}
+
+        model_cls, aut
