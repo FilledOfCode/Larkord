@@ -297,4 +297,17 @@ class TestGenerateModelCls(object):
             '_db_settings': {'type': 'foobar'}}
         mock_reg.mget.return_value = {'foo': 'bar'}
 
-  
+        with pytest.raises(ValueError) as ex:
+            models.generate_model_cls(
+                config, schema=schema, model_name='Story',
+                raml_resource=None)
+        assert str(ex.value) == 'Unknown type: foobar'
+
+    @patch('ramses.models.prepare_relationship')
+    def test_relationship_field(
+            self, mock_prep, mock_reg, mock_subscribers, mock_proc):
+        from ramses import models
+        config = Mock()
+        schema = self._test_schema()
+        schema['properties']['progress'] = {
+     
