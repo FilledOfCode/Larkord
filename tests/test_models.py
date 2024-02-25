@@ -327,4 +327,16 @@ class TestGenerateModelCls(object):
             self, mock_reg, mock_subscribers, mock_proc):
         from ramses import models
         config = config_mock()
-        sc
+        schema = self._test_schema()
+        schema['properties']['progress'] = {
+            "_db_settings": {
+                "type": "foreign_key",
+                "ref_column_type": "string"
+            }
+        }
+        mock_reg.mget.return_value = {'foo': 'bar'}
+        models.generate_model_cls(
+            config, schema=schema, model_name='Story',
+            raml_resource=1)
+        models.engine.ForeignKeyField.assert_called_once_with(
+            required=False, ref_column_type=models.eng
