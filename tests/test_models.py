@@ -355,4 +355,16 @@ class TestGenerateModelCls(object):
         models.generate_model_cls(
             config, schema=schema, model_name='Story',
             raml_resource=1)
-     
+        models.engine.ListField.assert_called_once_with(
+            required=False, item_type=models.engine.IntegerField)
+
+    def test_duplicate_field_name(
+            self, mock_reg, mock_subscribers, mock_proc):
+        from ramses import models
+        config = config_mock()
+        schema = self._test_schema()
+        schema['properties']['_public_fields'] = {
+            '_db_settings': {'type': 'interval'}}
+        mock_reg.mget.return_value = {'foo': 'bar'}
+        models.generate_model_cls(
+            conf
