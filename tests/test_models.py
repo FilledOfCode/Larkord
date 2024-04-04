@@ -367,4 +367,21 @@ class TestGenerateModelCls(object):
             '_db_settings': {'type': 'interval'}}
         mock_reg.mget.return_value = {'foo': 'bar'}
         models.generate_model_cls(
-            conf
+            config, schema=schema, model_name='Story',
+            raml_resource=1)
+        assert not models.engine.IntervalField.called
+
+
+class TestSubscribersSetup(object):
+
+    @patch('ramses.models.resolve_to_callable')
+    @patch('ramses.models.get_events_map')
+    def test_setup_model_event_subscribers(self, mock_get, mock_resolve):
+        from ramses import models
+        mock_get.return_value = {'before': {'index': 'eventcls'}}
+        mock_resolve.return_value = 1
+        config = Mock()
+        model_cls = 'mymodel'
+        schema = {
+            '_event_handlers': {
+        
