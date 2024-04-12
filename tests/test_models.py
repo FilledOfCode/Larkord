@@ -384,4 +384,17 @@ class TestSubscribersSetup(object):
         model_cls = 'mymodel'
         schema = {
             '_event_handlers': {
-        
+                'before_index': ['func1', 'func2']
+            }
+        }
+        models.setup_model_event_subscribers(config, model_cls, schema)
+        mock_get.assert_called_once_with()
+        mock_resolve.assert_has_calls([call('func1'), call('func2')])
+        config.subscribe_to_events.assert_has_calls([
+            call(mock_resolve(), ['eventcls'], model='mymodel'),
+            call(mock_resolve(), ['eventcls'], model='mymodel'),
+        ])
+
+    @patch('ramses.models.resolve_to_callable')
+    @patch('ramses.models.engine')
+    def te
