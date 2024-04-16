@@ -397,4 +397,19 @@ class TestSubscribersSetup(object):
 
     @patch('ramses.models.resolve_to_callable')
     @patch('ramses.models.engine')
-    def te
+    def test_setup_fields_processors(self, mock_eng, mock_resolve):
+        from ramses import models
+        config = Mock()
+        schema = {
+            'properties': {
+                'stories': {
+                    "_db_settings": {
+                        "type": "relationship",
+                        "document": "Story",
+                        "backref_name": "owner",
+                    },
+                    "_processors": ["lowercase"],
+                    "_backref_processors": ["backref_lowercase"]
+                }
+            }
+   
