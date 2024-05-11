@@ -412,4 +412,19 @@ class TestSubscribersSetup(object):
                     "_backref_processors": ["backref_lowercase"]
                 }
             }
-   
+        }
+
+        models.setup_fields_processors(config, 'mymodel', schema)
+
+        mock_resolve.assert_has_calls([
+            call('lowercase'), call('backref_lowercase')])
+        mock_eng.get_document_cls.assert_called_once_with('Story')
+        config.add_field_processors.assert_has_calls([
+            call([mock_resolve()], model='mymodel', field='stories'),
+            call([mock_resolve()], model=mock_eng.get_document_cls(),
+                 field='owner'),
+        ])
+
+    @patch('ramses.models.resolve_to_callable')
+    @patch('ramses.models.engine')
+    d
