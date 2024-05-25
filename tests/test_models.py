@@ -443,3 +443,18 @@ class TestSubscribersSetup(object):
                 }
             }
         }
+        models.setup_fields_processors(config, 'mymodel', schema)
+        assert not config.add_field_processors.called
+
+    @patch('ramses.models.resolve_to_callable')
+    @patch('ramses.models.engine')
+    def test_setup_fields_processors_backref_no_doc(
+            self, mock_eng, mock_resolve):
+        from ramses import models
+        config = Mock()
+        schema = {
+            'properties': {
+                'stories': {
+                    "_db_settings": {
+                        "type": "relationship",
+                       
