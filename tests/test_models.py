@@ -473,4 +473,15 @@ class TestSubscribersSetup(object):
         from ramses import models
         config = Mock()
         schema = {
-          
+            'properties': {
+                'stories': {
+                    "_db_settings": {
+                        "type": "relationship",
+                        "document": "Story",
+                    },
+                    "_backref_processors": ["backref_lowercase"]
+                }
+            }
+        }
+        models.setup_fields_processors(config, 'mymodel', schema)
+        assert not config.add_field_processors.called
