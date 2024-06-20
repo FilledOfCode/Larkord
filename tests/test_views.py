@@ -48,4 +48,20 @@ class TestBaseView(ViewTestBase):
     view_cls = views.BaseView
 
     def test_init(self):
-        view = self._test_v
+        view = self._test_view()
+        assert view._query_params['_limit'] == 20
+
+    def test_clean_id_name(self):
+        view = self._test_view()
+        view._resource = Mock(id_name='foo')
+        assert view.clean_id_name == 'foo'
+        view._resource = Mock(id_name='foo_bar')
+        assert view.clean_id_name == 'bar'
+
+    def test_resolve_kw(self):
+        view = self._test_view()
+        kwargs = {'foo_bar_qoo': 1, 'arg_val': 4, 'q': 3}
+        assert view.resolve_kw(kwargs) == {'bar_qoo': 1, 'val': 4, 'q': 3}
+
+    def test_location(self):
+        view = self._t
