@@ -64,4 +64,17 @@ class TestBaseView(ViewTestBase):
         assert view.resolve_kw(kwargs) == {'bar_qoo': 1, 'val': 4, 'q': 3}
 
     def test_location(self):
-        view = self._t
+        view = self._test_view()
+        view._resource = Mock(id_name='myid', uid='items')
+        view._location(Mock(myid=123))
+        view.request.route_url.assert_called_once_with(
+            'items', myid=123)
+
+    def test_location_split_id(self):
+        view = self._test_view()
+        view._resource = Mock(id_name='items_myid', uid='items')
+        view._location(Mock(myid=123))
+        view.request.route_url.assert_called_once_with(
+            'items', items_myid=123)
+
+    def test_get_collection_has_parent(sel
