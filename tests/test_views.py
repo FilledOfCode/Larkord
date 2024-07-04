@@ -77,4 +77,18 @@ class TestBaseView(ViewTestBase):
         view.request.route_url.assert_called_once_with(
             'items', items_myid=123)
 
-    def test_get_collection_has_parent(sel
+    def test_get_collection_has_parent(self):
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=[1, 2, 3])
+        view.Model = Mock()
+        view.get_collection(name='ok')
+        view._parent_queryset.assert_called_once_with()
+        view.Model.filter_objects.assert_called_once_with(
+            [1, 2, 3], _limit=20, foo='bar', name='ok')
+
+    def test_get_collection_has_parent_empty_queryset(self):
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=[])
+        view.Model = Mock()
+        view.get_collection(name='ok')
+        view._parent_query
