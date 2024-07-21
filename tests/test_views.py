@@ -91,4 +91,18 @@ class TestBaseView(ViewTestBase):
         view._parent_queryset = Mock(return_value=[])
         view.Model = Mock()
         view.get_collection(name='ok')
-        view._parent_query
+        view._parent_queryset.assert_called_once_with()
+        view.Model.filter_objects.assert_called_once_with(
+            [], _limit=20, foo='bar', name='ok')
+
+    def test_get_collection_no_parent(self):
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=None)
+        view.Model = Mock()
+        view.get_collection(name='ok')
+        view._parent_queryset.assert_called_once_with()
+        assert not view.Model.filter_objects.called
+        view.Model.get_collection.assert_called_once_with(
+            _limit=20, foo='bar', name='ok')
+
+    def test_get_item_no_parent
