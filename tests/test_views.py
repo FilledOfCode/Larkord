@@ -105,4 +105,20 @@ class TestBaseView(ViewTestBase):
         view.Model.get_collection.assert_called_once_with(
             _limit=20, foo='bar', name='ok')
 
-    def test_get_item_no_parent
+    def test_get_item_no_parent(self):
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=None)
+        view.context = 1
+        assert view.get_item(name='wqe') == 1
+
+    def test_get_item_not_found_in_parent(self):
+        view = self._test_view()
+        view.Model = Mock(__name__='foo')
+        view._get_context_key = Mock(return_value='123123')
+        view._parent_queryset = Mock(return_value=[2, 3])
+        view.context = 1
+        with pytest.raises(JHTTPNotFound):
+            view.get_item(name='wqe')
+
+    def test_get_item_found_in_parent(self):
+   
