@@ -152,4 +152,18 @@ class TestBaseView(ViewTestBase):
             _json_encoder = 'foo'
 
         user = root.add(
-            'user', 'users', id_name=
+            'user', 'users', id_name='username',
+            view=View, factory=BaseACL)
+        user.add(
+            'story', 'stories', id_name='prof_id',
+            view=View, factory=BaseACL)
+        view_cls = root.resource_map['user:story'].view
+        view_cls._json_encoder = 'foo'
+
+        request = Mock(
+            registry=Mock(),
+            path='/foo/foo',
+            matchdict={'username': 'user12', 'prof_id': 4},
+            accept=[''], method='GET'
+        )
+        request.params.mixed.return_value = {'foo1': 'bar
