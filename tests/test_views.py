@@ -134,4 +134,22 @@ class TestBaseView(ViewTestBase):
         view.context = func
         assert view.get_item(name='wqe') is view.context
         view.reload_context.assert_called_once_with(
-            es_based=F
+            es_based=False, name='wqe')
+
+    def test_get_context_key(self):
+        view = self._test_view()
+        view._resource = Mock(id_name='foo')
+        assert view._get_context_key(foo='bar') == 'bar'
+
+    def test_parent_queryset(self):
+        from pyramid.config import Configurator
+        from ramses.acl import BaseACL
+        config = Configurator()
+        config.include('nefertari')
+        root = config.get_root_resource()
+
+        class View(self.view_cls, BaseView):
+            _json_encoder = 'foo'
+
+        user = root.add(
+            'user', 'users', id_name=
