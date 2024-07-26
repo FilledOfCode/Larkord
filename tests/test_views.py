@@ -121,4 +121,17 @@ class TestBaseView(ViewTestBase):
             view.get_item(name='wqe')
 
     def test_get_item_found_in_parent(self):
-   
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=[1, 3])
+        view.context = 1
+        assert view.get_item(name='wqe') == 1
+
+    def test_get_item_found_in_parent_context_callable(self):
+        func = lambda x: x
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=[func, 3])
+        view.reload_context = Mock()
+        view.context = func
+        assert view.get_item(name='wqe') is view.context
+        view.reload_context.assert_called_once_with(
+            es_based=F
