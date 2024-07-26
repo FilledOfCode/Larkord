@@ -166,4 +166,19 @@ class TestBaseView(ViewTestBase):
             matchdict={'username': 'user12', 'prof_id': 4},
             accept=[''], method='GET'
         )
-        request.params.mixed.return_value = {'foo1': 'bar
+        request.params.mixed.return_value = {'foo1': 'bar1'}
+        request.blank.return_value = request
+        stories_view = view_cls(
+            request=request,
+            context={},
+            _query_params={'foo1': 'bar1'},
+            _json_params={'foo2': 'bar2'},)
+
+        parent_view = stories_view._resource.parent.view
+        with patch.object(parent_view, 'get_item') as get_item:
+            parent_view.get_item = get_item
+            result = stories_view._parent_queryset()
+            get_item.assert_called_once_with(username='user12')
+            assert result == get_item().stories
+
+    def test_
