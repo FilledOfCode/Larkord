@@ -181,4 +181,23 @@ class TestBaseView(ViewTestBase):
             get_item.assert_called_once_with(username='user12')
             assert result == get_item().stories
 
-    def test_
+    def test_reload_context(self):
+        class Factory(dict):
+            item_model = None
+
+            def __getitem__(self, key):
+                return key
+
+        view = self._test_view()
+        view._factory = Factory
+        view._get_context_key = Mock(return_value='foo')
+        view.reload_context(es_based=False, arg='asd')
+        view._get_context_key.assert_called_once_with(arg='asd')
+        assert view.context == 'foo'
+
+
+class TestCollectionView(ViewTestBase):
+    view_cls = views.CollectionView
+
+    def test_index(self):
+        view =
