@@ -200,4 +200,21 @@ class TestCollectionView(ViewTestBase):
     view_cls = views.CollectionView
 
     def test_index(self):
-        view =
+        view = self._test_view()
+        view.get_collection = Mock()
+        resp = view.index(foo='bar')
+        view.get_collection.assert_called_once_with()
+        assert resp == view.get_collection()
+
+    def test_show(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.show(foo='bar')
+        view.get_item.assert_called_once_with(foo='bar')
+        assert resp == view.get_item()
+
+    def test_create(self):
+        view = self._test_view()
+        view.set_object_acl = Mock()
+        view.request.registry._root_resources = {
+     
