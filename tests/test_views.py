@@ -217,4 +217,19 @@ class TestCollectionView(ViewTestBase):
         view = self._test_view()
         view.set_object_acl = Mock()
         view.request.registry._root_resources = {
-     
+            'foo': Mock(auth=False)
+        }
+        view.Model = Mock()
+        obj = Mock()
+        obj.to_dict.return_value = {'id': 1}
+        view.Model().save.return_value = obj
+        view._location = Mock(return_value='/sadasd')
+        resp = view.create(foo='bar')
+        view.Model.assert_called_with(foo2='bar2')
+        view.Model().save.assert_called_with(view.request)
+        assert view.set_object_acl.call_count == 1
+        assert resp == view.Model().save()
+
+    def test_update(self):
+        view = self._test_view()
+        view.get_it
