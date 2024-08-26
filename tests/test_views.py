@@ -232,4 +232,20 @@ class TestCollectionView(ViewTestBase):
 
     def test_update(self):
         view = self._test_view()
-        view.get_it
+        view.get_item = Mock()
+        view._location = Mock(return_value='/sadasd')
+        resp = view.update(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        view.get_item().update.assert_called_once_with(
+            {'foo2': 'bar2'}, view.request)
+        assert resp == view.get_item().update()
+
+    def test_replace(self):
+        view = self._test_view()
+        view.update = Mock()
+        resp = view.replace(foo=1)
+        view.update.assert_called_once_with(foo=1)
+        assert resp == view.update()
+
+    def test_delete(self):
+        view = se
