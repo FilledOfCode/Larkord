@@ -248,4 +248,19 @@ class TestCollectionView(ViewTestBase):
         assert resp == view.update()
 
     def test_delete(self):
-        view = se
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.delete(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        view.get_item().delete.assert_called_once_with(
+            view.request)
+        assert resp is None
+
+    def test_delete_many(self):
+        view = self._test_view()
+        view.Model = Mock(__name__='Mock')
+        view.Model._delete_many.return_value = 123
+        view.get_collection = Mock()
+        resp = view.delete_many(foo=1)
+        view.get_collection.assert_called_once_with()
+        view.Model._
