@@ -263,4 +263,17 @@ class TestCollectionView(ViewTestBase):
         view.get_collection = Mock()
         resp = view.delete_many(foo=1)
         view.get_collection.assert_called_once_with()
-        view.Model._
+        view.Model._delete_many.assert_called_once_with(
+            view.get_collection(), view.request)
+        assert resp == 123
+
+    def test_update_many(self):
+        view = self._test_view()
+        view.Model = Mock(__name__='Mock')
+        view.Model._update_many.return_value = 123
+        view.get_collection = Mock()
+        resp = view.update_many(qoo=1)
+        view.get_collection.assert_called_once_with(_limit=20, foo='bar')
+        view.Model._update_many.assert_called_once_with(
+            view.get_collection(), {'foo2': 'bar2'},
+           
