@@ -276,4 +276,24 @@ class TestCollectionView(ViewTestBase):
         view.get_collection.assert_called_once_with(_limit=20, foo='bar')
         view.Model._update_many.assert_called_once_with(
             view.get_collection(), {'foo2': 'bar2'},
-           
+            view.request)
+        assert resp == 123
+
+
+class TestESBaseView(ViewTestBase):
+    view_cls = views.ESBaseView
+
+    def test_parent_queryset_es(self):
+        from pyramid.config import Configurator
+        from ramses.acl import BaseACL
+
+        class View(self.view_cls, BaseView):
+            _json_encoder = 'foo'
+
+        config = Configurator()
+        config.include('nefertari')
+        root = config.get_root_resource()
+        user = root.add(
+            'user', 'users', id_name='username',
+            view=View, factory=BaseACL)
+        
