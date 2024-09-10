@@ -324,4 +324,17 @@ class TestESBaseView(ViewTestBase):
             assert result == get_item_es().stories
 
     def test_get_es_object_ids(self):
-        vie
+        view = self._test_view()
+        view._resource = Mock(id_name='foobar')
+        objects = [Mock(foobar=4), Mock(foobar=7)]
+        assert sorted(view.get_es_object_ids(objects)) == ['4', '7']
+
+    @patch('nefertari.elasticsearch.ES')
+    def test_get_collection_es_no_parent(self, mock_es):
+        mock_es.settings.asbool.return_value = False
+        view = self._test_view()
+        view._parent_queryset_es = Mock(return_value=None)
+        view.Model = Mock(__name__='Foo')
+        view.get_collection_es()
+        mock_es.assert_called_once_with('Foo')
+       
