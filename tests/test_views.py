@@ -309,4 +309,19 @@ class TestESBaseView(ViewTestBase):
             accept=[''], method='GET'
         )
         request.params.mixed.return_value = {'foo1': 'bar1'}
-        request.blank.return_va
+        request.blank.return_value = request
+        stories_view = view_cls(
+            request=request,
+            context={},
+            _query_params={'foo1': 'bar1'},
+            _json_params={'foo2': 'bar2'},)
+
+        parent_view = stories_view._resource.parent.view
+        with patch.object(parent_view, 'get_item_es') as get_item_es:
+            parent_view.get_item_es = get_item_es
+            result = stories_view._parent_queryset_es()
+            get_item_es.assert_called_once_with(username='user12')
+            assert result == get_item_es().stories
+
+    def test_get_es_object_ids(self):
+        vie
