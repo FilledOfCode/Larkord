@@ -349,4 +349,16 @@ class TestESBaseView(ViewTestBase):
         view.get_es_object_ids = Mock(return_value=None)
         result = view.get_collection_es()
         assert not mock_es().get_collection.called
-        asse
+        assert result == []
+
+    @patch('nefertari.elasticsearch.ES')
+    def test_get_collection_es_parent_with_ids(self, mock_es):
+        mock_es.settings.asbool.return_value = False
+        view = self._test_view()
+        view._parent_queryset_es = Mock(return_value=['obj1', 'obj2'])
+        view.Model = Mock(__name__='Foo')
+        view.get_es_object_ids = Mock(return_value=[1, 2])
+        view.get_collection_es()
+        view.get_es_object_ids.assert_called_once_with(['obj1', 'obj2'])
+        mock_es().get_collection.assert_called_once_with(
+            _limit=20, foo=
