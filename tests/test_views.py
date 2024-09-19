@@ -361,4 +361,18 @@ class TestESBaseView(ViewTestBase):
         view.get_collection_es()
         view.get_es_object_ids.assert_called_once_with(['obj1', 'obj2'])
         mock_es().get_collection.assert_called_once_with(
-            _limit=20, foo=
+            _limit=20, foo='bar', id=[1, 2])
+
+    def test_get_item_es_no_parent(self):
+        view = self._test_view()
+        view._get_context_key = Mock(return_value=1)
+        view._parent_queryset_es = Mock(return_value=None)
+        view.reload_context = Mock()
+        view.context = 'foo'
+        resp = view.get_item_es(a=4)
+        view._get_context_key.assert_called_once_with(a=4)
+        view._parent_queryset_es.assert_called_once_with()
+        assert not view.reload_context.called
+        assert resp == 'foo'
+
+    def test_get_item_es_matching_id(self
