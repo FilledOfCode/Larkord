@@ -399,4 +399,18 @@ class TestESBaseView(ViewTestBase):
         view.context = 'foo'
         with pytest.raises(JHTTPNotFound) as ex:
             view.get_item_es(a=4)
-        assert 'Foo(id=1
+        assert 'Foo(id=1) resource not found' in str(ex.value)
+
+    def test_get_item_es_callable_context(self):
+        view = self._test_view()
+        view._get_context_key = Mock(return_value=1)
+        view._parent_queryset_es = Mock(return_value=['obj1', 'obj2'])
+        view.get_es_object_ids = Mock(return_value=[1, 2])
+        view.reload_context = Mock()
+        view.context = lambda x: x
+        resp = view.get_item_es(a=4)
+        view.reload_context.assert_called_once_with(es_based=True, a=4)
+        assert resp == view.context
+
+
+class TestESCollect
