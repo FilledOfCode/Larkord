@@ -413,4 +413,22 @@ class TestESBaseView(ViewTestBase):
         assert resp == view.context
 
 
-class TestESCollect
+class TestESCollectionView(ViewTestBase):
+    view_cls = views.ESCollectionView
+
+    def test_index(self):
+        view = self._test_view()
+        view.aggregate = Mock(side_effect=KeyError)
+        view.get_collection_es = Mock()
+        resp = view.index(foo=1)
+        view.get_collection_es.assert_called_once_with()
+        assert resp == view.get_collection_es()
+
+    def test_show(self):
+        view = self._test_view()
+        view.get_item_es = Mock()
+        resp = view.show(foo=1)
+        view.get_item_es.assert_called_once_with(foo=1)
+        assert resp == view.get_item_es()
+
+   
