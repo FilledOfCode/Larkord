@@ -386,4 +386,17 @@ class TestESBaseView(ViewTestBase):
         view.get_es_object_ids.assert_called_once_with(['obj1', 'obj2'])
         view._get_context_key.assert_called_once_with(a=4)
         view._parent_queryset_es.assert_called_once_with()
-        assert not view.re
+        assert not view.reload_context.called
+        assert resp == 'foo'
+
+    def test_get_item_es_not_matching_id(self):
+        view = self._test_view()
+        view._get_context_key = Mock(return_value=1)
+        view._parent_queryset_es = Mock(return_value=['obj1', 'obj2'])
+        view.get_es_object_ids = Mock(return_value=[2, 3])
+        view.reload_context = Mock()
+        view.Model = Mock(__name__='Foo')
+        view.context = 'foo'
+        with pytest.raises(JHTTPNotFound) as ex:
+            view.get_item_es(a=4)
+        assert 'Foo(id=1
