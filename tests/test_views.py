@@ -431,4 +431,17 @@ class TestESCollectionView(ViewTestBase):
         view.get_item_es.assert_called_once_with(foo=1)
         assert resp == view.get_item_es()
 
-   
+    def test_update(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        view.reload_context = Mock()
+        view._location = Mock(return_value='/sadasd')
+        resp = view.update(foo=1)
+        view.reload_context.assert_called_once_with(es_based=False, foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        view.get_item().update.assert_called_once_with(
+            {'foo2': 'bar2'}, view.request)
+        assert resp == view.get_item().update()
+
+    def test_replace(self):
+        
