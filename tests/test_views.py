@@ -444,4 +444,17 @@ class TestESCollectionView(ViewTestBase):
         assert resp == view.get_item().update()
 
     def test_replace(self):
-        
+        view = self._test_view()
+        view.update = Mock()
+        resp = view.replace(foo=1)
+        view.update.assert_called_once_with(foo=1)
+        assert resp == view.update()
+
+    def test_get_dbcollection_with_es(self):
+        view = self._test_view()
+        view._query_params['_limit'] = 50
+        view.get_collection_es = Mock(return_value=[1, 2])
+        view.Model = Mock()
+        result = view.get_dbcollection_with_es(foo='bar')
+        view.get_collection_es.assert_called_once_with()
+        view.Model.filter_objects.assert_called_once_with([1, 
