@@ -457,4 +457,19 @@ class TestESCollectionView(ViewTestBase):
         view.Model = Mock()
         result = view.get_dbcollection_with_es(foo='bar')
         view.get_collection_es.assert_called_once_with()
-        view.Model.filter_objects.assert_called_once_with([1, 
+        view.Model.filter_objects.assert_called_once_with([1, 2])
+        assert result == view.Model.filter_objects()
+
+    def test_delete_many(self):
+        view = self._test_view()
+        view.Model = Mock(__name__='Foo')
+        view.Model._delete_many.return_value = 123
+        view.get_dbcollection_with_es = Mock()
+        result = view.delete_many(foo=1)
+        view.get_dbcollection_with_es.assert_called_once_with(foo=1)
+        view.Model._delete_many.assert_called_once_with(
+            view.get_dbcollection_with_es(), view.request)
+        assert result == 123
+
+    def test_update_many(self):
+        vie
