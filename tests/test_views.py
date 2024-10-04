@@ -472,4 +472,19 @@ class TestESCollectionView(ViewTestBase):
         assert result == 123
 
     def test_update_many(self):
-        vie
+        view = self._test_view()
+        view.Model = Mock(__name__='Foo')
+        view.Model._update_many.return_value = 123
+        view.get_dbcollection_with_es = Mock()
+        result = view.update_many(foo=1)
+        view.get_dbcollection_with_es.assert_called_once_with(foo=1)
+        view.Model._update_many.assert_called_once_with(
+            view.get_dbcollection_with_es(), {'foo2': 'bar2'},
+            view.request)
+        assert result == 123
+
+
+class TestItemSubresourceBaseView(ViewTestBase):
+    view_cls = views.ItemSubresourceBaseView
+
+    def test_get_c
