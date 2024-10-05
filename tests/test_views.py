@@ -487,4 +487,19 @@ class TestESCollectionView(ViewTestBase):
 class TestItemSubresourceBaseView(ViewTestBase):
     view_cls = views.ItemSubresourceBaseView
 
-    def test_get_c
+    def test_get_context_key(self):
+        view = self._test_view()
+        parent = Mock(id_name='foobar')
+        resource = Mock()
+        resource.parent = parent
+        view._resource = resource
+        assert view._get_context_key(foobar=1, foo=2) == '1'
+
+    def test_get_item(self):
+        view = self._test_view()
+        view._parent_queryset = Mock(return_value=[1, 2])
+        view.reload_context = Mock()
+        view.context = 1
+        assert view.get_item(foo=4) == 1
+        view._parent_queryset.assert_called_once_with()
+        view.reload_context.assert_called_once_with(es_based=F
