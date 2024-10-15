@@ -523,4 +523,20 @@ class TestItemAttributeView(ViewTestBase):
         view = self._test_view()
         view.get_item = Mock()
         resp = view.index(foo=1)
-        
+        view.get_item.assert_called_once_with(foo=1)
+        assert resp == view.get_item().settings
+
+    def test_create(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.create(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        obj = view.get_item()
+        obj.update_iterables.assert_called_once_with(
+            {'foo2': 'bar2'}, 'settings',
+            unique=True, value_type=None,
+            request=view.request)
+        assert resp == obj.settings
+
+
+class TestItemSingularVie
