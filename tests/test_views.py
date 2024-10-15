@@ -502,4 +502,25 @@ class TestItemSubresourceBaseView(ViewTestBase):
         view.context = 1
         assert view.get_item(foo=4) == 1
         view._parent_queryset.assert_called_once_with()
-        view.reload_context.assert_called_once_with(es_based=F
+        view.reload_context.assert_called_once_with(es_based=False, foo=4)
+
+
+class TestItemAttributeView(ViewTestBase):
+    view_cls = views.ItemAttributeView
+    request_kwargs = dict(
+        method='GET',
+        accept=[''],
+        path='user/1/settings'
+    )
+
+    def test_init(self):
+        view = self._test_view()
+        assert view.value_type is None
+        assert view.unique
+        assert view.attr == 'settings'
+
+    def test_index(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.index(foo=1)
+        
