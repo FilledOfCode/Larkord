@@ -560,4 +560,18 @@ class TestItemSingularView(ViewTestBase):
         assert resp == view.get_item().profile
 
     def test_create(self):
-        view = s
+        view = self._test_view()
+        view.set_object_acl = Mock()
+        view.request.registry._root_resources = {
+            'foo': Mock(auth=False)
+        }
+        view.get_item = Mock()
+        view.Model = Mock()
+        resp = view.create(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        view.Model.assert_called_once_with(foo2='bar2')
+        child = view.Model()
+        child.save.assert_called_once_with(view.request)
+        parent = view.get_item()
+        parent.update.assert_called_once_with(
+            {'profile': child.
