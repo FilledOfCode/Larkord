@@ -539,4 +539,25 @@ class TestItemAttributeView(ViewTestBase):
         assert resp == obj.settings
 
 
-class TestItemSingularVie
+class TestItemSingularView(ViewTestBase):
+    view_cls = views.ItemSingularView
+    request_kwargs = dict(
+        method='GET',
+        accept=[''],
+        path='user/1/profile',
+        url='http://example.com',
+    )
+
+    def test_init(self):
+        view = self._test_view()
+        assert view.attr == 'profile'
+
+    def test_show(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.show(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        assert resp == view.get_item().profile
+
+    def test_create(self):
+        view = s
