@@ -574,4 +574,21 @@ class TestItemSingularView(ViewTestBase):
         child.save.assert_called_once_with(view.request)
         parent = view.get_item()
         parent.update.assert_called_once_with(
-            {'profile': child.
+            {'profile': child.save()}, view.request)
+        assert view.set_object_acl.call_count == 1
+        assert resp == child.save()
+
+    def test_update(self):
+        view = self._test_view()
+        view.get_item = Mock()
+        resp = view.update(foo=1)
+        view.get_item.assert_called_once_with(foo=1)
+        child = view.get_item().profile
+        child.update.assert_called_once_with(
+            {'foo2': 'bar2'}, view.request)
+        assert resp == child
+
+    def test_replace(self):
+        view = self._test_view()
+        view.update = Mock()
+        resp = 
