@@ -591,4 +591,23 @@ class TestItemSingularView(ViewTestBase):
     def test_replace(self):
         view = self._test_view()
         view.update = Mock()
-        resp = 
+        resp = view.replace(foo=1)
+        view.update.assert_called_once_with(foo=1)
+        assert resp == view.update()
+
+    def test_delete(self):
+        view = self._test_view()
+        view.attr = 'profile'
+        view.get_item = Mock()
+        resp = view.delete(foo=1)
+        assert resp is None
+        view.get_item.assert_called_once_with(foo=1)
+        parent = view.get_item()
+        parent.profile.delete.assert_called_once_with(
+            view.request)
+
+
+class TestRestViewGeneration(object):
+
+    @patch('ramses.views.NefertariBaseView._run_init_actions')
+    def test
