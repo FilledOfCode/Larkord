@@ -610,4 +610,13 @@ class TestItemSingularView(ViewTestBase):
 class TestRestViewGeneration(object):
 
     @patch('ramses.views.NefertariBaseView._run_init_actions')
-    def test
+    def test_only_provided_attrs_are_available(self, run_init):
+        config = config_mock()
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show', 'foobar'],
+            es_based=True, attr_view=False, singular=False)
+        view_cls._json_encoder = 'foo'
+        assert issubclass(view_cls, views.ESCollectionView)
+        request = Mock(**ViewTestBase.request_kwargs)
+        view = view_cls(request=request, **ViewTestBase.view_kwargs)
+        assert not hasattr(view_cls, 'foobar')
