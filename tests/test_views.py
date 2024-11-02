@@ -620,3 +620,19 @@ class TestRestViewGeneration(object):
         request = Mock(**ViewTestBase.request_kwargs)
         view = view_cls(request=request, **ViewTestBase.view_kwargs)
         assert not hasattr(view_cls, 'foobar')
+
+        try:
+            view.show()
+        except JHTTPMethodNotAllowed:
+            raise Exception('Unexpected error')
+        except Exception:
+            pass
+        with pytest.raises(JHTTPMethodNotAllowed):
+            view.delete_many()
+        with pytest.raises(JHTTPMethodNotAllowed):
+            view.create()
+        with pytest.raises(JHTTPMethodNotAllowed):
+            view.delete()
+        with pytest.raises(JHTTPMethodNotAllowed):
+            view.update_many()
+        with pytest.raises(JHTTPMethodNotAllowed
