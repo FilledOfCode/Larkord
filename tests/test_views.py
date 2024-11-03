@@ -650,4 +650,18 @@ class TestRestViewGeneration(object):
         config = config_mock()
         view_cls = views.generate_rest_view(
             config, model_cls='foo', attrs=['show'],
-            es_based=True, attr_
+            es_based=True, attr_view=True, singular=False)
+        view_cls._json_encoder = 'foo'
+        assert issubclass(view_cls, views.ItemAttributeView)
+
+    def test_escollection_view(self):
+        config = config_mock()
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show'],
+            es_based=True, attr_view=False, singular=False)
+        view_cls._json_encoder = 'foo'
+        assert issubclass(view_cls, views.ESCollectionView)
+        assert issubclass(view_cls, views.CollectionView)
+
+    def test_dbcollection_view(self):
+  
