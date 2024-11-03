@@ -635,4 +635,19 @@ class TestRestViewGeneration(object):
             view.delete()
         with pytest.raises(JHTTPMethodNotAllowed):
             view.update_many()
-        with pytest.raises(JHTTPMethodNotAllowed
+        with pytest.raises(JHTTPMethodNotAllowed):
+            view.index()
+
+    def test_singular_view(self):
+        config = config_mock()
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show'],
+            es_based=True, attr_view=False, singular=True)
+        view_cls._json_encoder = 'foo'
+        assert issubclass(view_cls, views.ItemSingularView)
+
+    def test_attribute_view(self):
+        config = config_mock()
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show'],
+            es_based=True, attr_
