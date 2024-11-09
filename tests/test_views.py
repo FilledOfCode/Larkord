@@ -676,4 +676,16 @@ class TestRestViewGeneration(object):
         config = config_mock()
         view_cls = views.generate_rest_view(
             config, model_cls='foo', attrs=['show'])
-        view_cls._json_encoder = '
+        view_cls._json_encoder = 'foo'
+        assert issubclass(view_cls, views.ESCollectionView)
+        assert issubclass(view_cls, views.CollectionView)
+        assert view_cls.Model == 'foo'
+
+    def test_database_acls_option(self):
+        from nefertari_guards.view import ACLFilterViewMixin
+        config = config_mock()
+
+        config.registry.database_acls = False
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show'],
+            es_based=Fa
