@@ -688,4 +688,15 @@ class TestRestViewGeneration(object):
         config.registry.database_acls = False
         view_cls = views.generate_rest_view(
             config, model_cls='foo', attrs=['show'],
-            es_based=Fa
+            es_based=False, attr_view=False, singular=False)
+        assert not issubclass(
+            view_cls, ACLFilterViewMixin)
+        assert not issubclass(
+            view_cls, views.SetObjectACLMixin)
+
+        config.registry.database_acls = True
+        view_cls = views.generate_rest_view(
+            config, model_cls='foo', attrs=['show'],
+            es_based=False, attr_view=False, singular=False)
+        assert issubclass(view_cls, views.SetObjectACLMixin)
+        assert issubclass(view_cls, ACLFilterViewMixin)
